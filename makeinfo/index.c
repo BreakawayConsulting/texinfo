@@ -505,10 +505,23 @@ cm_tindex (void)                    /* Data Type index. */
 static int
 index_element_compare (const void *element1, const void *element2)
 {
+  int cmp;
   INDEX_ELT **elt1 = (INDEX_ELT **) element1;
   INDEX_ELT **elt2 = (INDEX_ELT **) element2;
 
-  return index_compare_fn ((*elt1)->entry, (*elt2)->entry);
+  cmp = index_compare_fn ((*elt1)->entry, (*elt2)->entry);
+  if (cmp != 0)
+    {
+      return cmp;
+    }
+  /* entries are equal, should compare node names */
+  cmp = index_compare_fn ((*elt1)->node, (*elt2)->node);
+  if (cmp != 0)
+    {
+      return cmp;
+    }
+  /* entries and nodes are equal, finally compare by line number */
+  return (*elt1)->defining_line - (*elt2)->defining_line;
 }
 
 /* Force all index entries to be unique. */
