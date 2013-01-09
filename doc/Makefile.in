@@ -544,17 +544,17 @@ texinfo: texinfo.txi $(srcdir)/version.texi
 	fi; \
 	rm -rf $$backupdir; exit $$rc
 
-texinfo.dvi: texinfo.txi $(srcdir)/version.texi 
+texinfo.dvi: texinfo.txi $(srcdir)/version.texi
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2DVI) -o $@ `test -f 'texinfo.txi' || echo '$(srcdir)/'`texinfo.txi
 
-texinfo.pdf: texinfo.txi $(srcdir)/version.texi 
+texinfo.pdf: texinfo.txi $(srcdir)/version.texi
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2PDF) -o $@ `test -f 'texinfo.txi' || echo '$(srcdir)/'`texinfo.txi
 
-texinfo.html: texinfo.txi $(srcdir)/version.texi 
+texinfo.html: texinfo.txi $(srcdir)/version.texi
 	rm -rf $(@:.html=.htp)
 	if $(MAKEINFOHTML) $(AM_MAKEINFOHTMLFLAGS) $(MAKEINFOFLAGS) -I $(srcdir) \
 	 -o $(@:.html=.htp) `test -f 'texinfo.txi' || echo '$(srcdir)/'`texinfo.txi; \
@@ -605,17 +605,17 @@ info-stnd.info: info-stnd.texi $(srcdir)/version-stnd.texi
 	fi; \
 	rm -rf $$backupdir; exit $$rc
 
-info-stnd.dvi: info-stnd.texi $(srcdir)/version-stnd.texi 
+info-stnd.dvi: info-stnd.texi $(srcdir)/version-stnd.texi
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2DVI) -o $@ `test -f 'info-stnd.texi' || echo '$(srcdir)/'`info-stnd.texi
 
-info-stnd.pdf: info-stnd.texi $(srcdir)/version-stnd.texi 
+info-stnd.pdf: info-stnd.texi $(srcdir)/version-stnd.texi
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2PDF) -o $@ `test -f 'info-stnd.texi' || echo '$(srcdir)/'`info-stnd.texi
 
-info-stnd.html: info-stnd.texi $(srcdir)/version-stnd.texi 
+info-stnd.html: info-stnd.texi $(srcdir)/version-stnd.texi
 	rm -rf $(@:.html=.htp)
 	if $(MAKEINFOHTML) $(AM_MAKEINFOHTMLFLAGS) $(MAKEINFOFLAGS) -I $(srcdir) \
 	 -o $(@:.html=.htp) `test -f 'info-stnd.texi' || echo '$(srcdir)/'`info-stnd.texi; \
@@ -666,17 +666,17 @@ info.info: info.texi $(info_TEXINFOS)
 	fi; \
 	rm -rf $$backupdir; exit $$rc
 
-info.dvi: info.texi $(info_TEXINFOS) 
+info.dvi: info.texi $(info_TEXINFOS)
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2DVI) -o $@ `test -f 'info.texi' || echo '$(srcdir)/'`info.texi
 
-info.pdf: info.texi $(info_TEXINFOS) 
+info.pdf: info.texi $(info_TEXINFOS)
 	TEXINPUTS="$(am__TEXINFO_TEX_DIR)$(PATH_SEPARATOR)$$TEXINPUTS" \
 	MAKEINFO='$(MAKEINFO) $(AM_MAKEINFOFLAGS) $(MAKEINFOFLAGS) -I $(srcdir)' \
 	$(TEXI2PDF) -o $@ `test -f 'info.texi' || echo '$(srcdir)/'`info.texi
 
-info.html: info.texi $(info_TEXINFOS) 
+info.html: info.texi $(info_TEXINFOS)
 	rm -rf $(@:.html=.htp)
 	if $(MAKEINFOHTML) $(AM_MAKEINFOHTMLFLAGS) $(MAKEINFOFLAGS) -I $(srcdir) \
 	 -o $(@:.html=.htp) `test -f 'info.texi' || echo '$(srcdir)/'`info.texi; \
@@ -1102,30 +1102,30 @@ install-tex:
 	for f in $(TXI_XLATE); do \
 	  $(INSTALL_DATA) $(srcdir)/$$f $(DESTDIR)$(texmf_texinfo)/$$f; done
 
-$(srcdir)/info.1: $(top_srcdir)/info/info.c $(common_mandeps)
+$(srcdir)/info.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/info/info.c $(common_mandeps)
 	@name="read Info documents" && $(man_rule_bin)
-$(srcdir)/infokey.1: $(top_srcdir)/info/infokey.c $(common_mandeps)
+$(srcdir)/infokey.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/info/infokey.c $(common_mandeps)
 	@name="compile customizations for Info" && $(man_rule_bin)
-$(srcdir)/install-info.1: $(top_srcdir)/install-info/install-info.c $(common_mandeps)
+$(srcdir)/install-info.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/install-info/install-info.c $(common_mandeps)
 	@name="update info/dir entries" && $(man_rule_bin)
 
 # Here we need some postprocessing:
-$(srcdir)/makeinfo.1: $(top_srcdir)/makeinfo/makeinfo.c $(common_mandeps)
+$(srcdir)/makeinfo.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/makeinfo/makeinfo.c $(common_mandeps)
 	@name="translate Texinfo documents" && $(man_rule_bin)
 	mv $@ $@.tmp
 	sed '/^\.IP$$/N;/\nAlso/s/I//;/\nThe/s/I//' $@.tmp >$@
 	rm $@.tmp
 
-$(srcdir)/texindex.1: $(util_srcdir)/texindex.c $(common_mandeps)
+$(srcdir)/texindex.1: @MAINTAINER_MODE_TRUE@ $(util_srcdir)/texindex.c $(common_mandeps)
 	@name="sort Texinfo index files" && $(man_rule_bin)
 
-$(srcdir)/texi2dvi.1: $(common_texi2dvi_deps)
+$(srcdir)/texi2dvi.1: @MAINTAINER_MODE_TRUE@ $(common_texi2dvi_deps)
 	$(change_envvars); $(HELP2MAN) --name="convert Texinfo documents to DVI" $(util_srcdir)/texi2dvi >$@
 
-$(srcdir)/texi2pdf.1: $(common_texi2dvi_deps)
+$(srcdir)/texi2pdf.1: @MAINTAINER_MODE_TRUE@ $(common_texi2dvi_deps)
 	$(change_envvars); $(HELP2MAN) --name="convert Texinfo documents to PDF" $(util_srcdir)/texi2pdf >$@
 
-$(srcdir)/pdftexi2dvi.1:  $(common_texi2dvi_deps)
+$(srcdir)/pdftexi2dvi.1: @MAINTAINER_MODE_TRUE@ $(common_texi2dvi_deps)
 	$(change_envvars); $(HELP2MAN) --name="convert Texinfo documents to PDF" $(util_srcdir)/pdftexi2dvi >$@
 
 # Do not create info files for distribution.
